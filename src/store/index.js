@@ -72,6 +72,7 @@ const store = createStore({
         commit('SET_LOADING', false);
       }
     },
+
     async fetchGenres({ commit }) {
       try {
         const response = await fetch(
@@ -83,6 +84,43 @@ const store = createStore({
         console.error('Erro ao buscar gêneros:', error);
       }
     },
+
+
+    async searchMovies({commit, state}, searchText){
+
+      debugger
+
+        try {
+
+          const response = await fetch(`${baseUrl}/search/movie?query=${searchText}&include_adult=false&language=pt-BR&page=1`, {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
+          })
+
+          if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.statusText}`);
+          }
+
+          const data = await response.json();
+
+          state.movies = [];
+          state.genres = [];
+          state.currentPage = 1;
+          state.totalPages = 1;
+          state.totalResults = 0;
+
+          commit('SET_MOVIES', data);
+          console.log('Filmes encontratos:', data);
+
+        } catch (error) {
+            console.log("Error", error)
+        }
+        finally {
+          console.log("Acabou")
+        }
+    }    
 
 
   },
