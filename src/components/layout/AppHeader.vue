@@ -50,9 +50,19 @@ export default {
 </script>
 
 <style scoped>
+header {
+  height: 80px;
+  background: green;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+}
 .inner-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 </style>
 

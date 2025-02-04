@@ -7,15 +7,54 @@
     </div>
   </main>
 
+  <aside class="sidebar">
+    <header class="sidebar__header">
+      <h3>Meu carrinho</h3>
+      <button type="button">Esvaziar</button>
+    </header>
+    <div class="sidebar__content">
+      <ul>
+
+        <li v-for="(movie, index) in shopCart" :key="index">
+          <div class="sidebar__image-wrapper">
+            <img :src="movie.image" :alt="movie.title" class="sidebar__image">
+          </div>
+          <div class="sidebar__movie-info">
+            <p class="sidebar__movie-name">{{ movie.title }}</p>
+            <p class="sidebar__movie-quantity">{{ movie.quantity }}</p>
+            <p class="sidebar__movie-price">R${{movie.price}}</p>
+            <button @click="removeMovieFromCart(movie)">Del</button>
+          </div>
+          
+        </li>
+      </ul>
+
+    </div>
+    <footer class="sidebar__footer">
+        <p>Total <span class="total">R$19,98</span></p>
+        <button type="button">Finalizar</button>
+    </footer>
+
+  </aside>
+
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from 'vuex';
 import { RouterLink, RouterView } from 'vue-router'
 import AppHeader from './components/layout/AppHeader.vue';
+
 export default {
   components: {
     AppHeader
-  }
+  },
+  methods: {
+    ...mapActions(['addMovieToCart', 'removeMovieFromCart'])
+  },
+  computed: {
+    ...mapState(['shopCart']),
+    ...mapGetters(['loading', 'error']),
+  },  
 }
 </script>
 

@@ -2,7 +2,7 @@
   <div class="movies-wrapper">
     <div class="movie-card" v-for="movie in movies" :key="movie.id">
       <div class="movie-card__image-wrapper">
-        <img :src="moviePosterBaseUrl+movie.poster_path" :alt="movie.title" loading="lazy" class="movie-card__image">
+        <img :src="movie.image" :alt="movie.title" loading="lazy" class="movie-card__image">
         <p>Lançamento: {{ movie.release_date }}</p>
         <button>Favoritar</button>
       </div>
@@ -10,8 +10,8 @@
       <h2>Nome: {{ movie.title }}</h2>
       <p>Nota média: {{ movie.vote_average}}</p>
       <p>Gêneros: {{ getGenreNames(movie.genre_ids)}}</p>
-      <p>Preço: R$17,99</p>
-      <button>Adicionar</button>
+      <p>Preço: {{ movie.price }}</p>
+      <button @click="addToShopCart(movie)">Adicionar</button>
       </div>
     </div>
 
@@ -74,7 +74,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchMovies']),
+    ...mapActions(['fetchMovies', 'addMovieToCart']),
     getGenreNames(genreIds) {
 
       return genreIds
@@ -82,6 +82,10 @@ export default {
           const genre = this.genres.find((genre) => genre.id === id);
           return genre ? genre.name : '';
         }).join(', ');
+    },
+
+    addToShopCart(movie) {
+      this.addMovieToCart(movie);
     },
 
     handleScroll() {

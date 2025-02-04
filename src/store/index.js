@@ -17,10 +17,21 @@ const store = createStore({
     totalResults: 0,
     loading: false,
     error: null,
+    shopCart: []
   },
   mutations: {
     SET_MOVIES(state, payload) {
-      state.movies = [...state.movies, ...payload.results];
+
+      let normalizedList = payload.results.map((result) => {
+        return {
+          ...result,
+          image: `https://image.tmdb.org/t/p/w342${result.poster_path}`,
+          price: `79,99`,
+          quantity: 1 
+        }
+      })
+
+      state.movies = [...state.movies, ...normalizedList];
       state.currentPage = payload.page + 1;
       state.totalPages = payload.total_pages;
       state.totalResults = payload.total_results;
@@ -35,6 +46,17 @@ const store = createStore({
     SET_ERROR(state, error) {
       state.error = error;
     },
+
+    ADD_MOVIE_TO_CART(state, movie) {
+      state.shopCart.push(movie)
+    },
+
+    REMOVE_MOVIE_FROM_CART(state, movie) {
+      debugger
+      state.shopCart = state.shopCart.filter((currentMovie) => {
+        return currentMovie.id !== movie.id
+      })
+    }    
 
   },
   actions: {
@@ -87,9 +109,6 @@ const store = createStore({
 
 
     async searchMovies({commit, state}, searchText){
-
-      debugger
-
         try {
 
           const response = await fetch(`${baseUrl}/search/movie?query=${searchText}&include_adult=false&language=pt-BR&page=1`, {
@@ -120,7 +139,15 @@ const store = createStore({
         finally {
           console.log("Acabou")
         }
-    }    
+    },
+    
+    async addMovieToCart({commit, state}, movie) {
+      commit('ADD_MOVIE_TO_CART', movie)
+    }, 
+
+    async removeMovieFromCart({commit, state}, movie) {
+      commit('REMOVE_MOVIE_FROM_CART', movie)
+    }     
 
 
   },
@@ -129,10 +156,11 @@ const store = createStore({
   getters: {
     movies: (state) => state.movies,
     genres: (state) => state.genres,
+    shopCart: (state) => state.shopCart,
     currentPage: (state) => state.currentPage,
     totalPages: (state) => state.totalPages,
     totalResults: (state) => state.totalResults,
-       loading: (state) => state.loading,
+    loading: (state) => state.loading,
     error: (state) => state.error,
   },
 });

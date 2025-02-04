@@ -11,10 +11,58 @@ img {
 
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding-top: 120px;
 }
 
 .inner-content {
   max-width: 1440px;
   margin-inline: auto;
   padding-inline: 24px;
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 340px;
+  position: fixed;
+  right: 0;
+  top: 80px;
+  height: calc(100% - 80px);
+  background: blue;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__header  {
+ padding: 8px 16px;
+}
+
+.sidebar__content  {
+ padding: 8px 16px;
+ overflow-y: auto;
+}
+
+.sidebar__content li {
+  display: flex;
+  background: grey;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sidebar__content li + * {
+  margin-top: 12px;
+}
+
+.sidebar__movie-info {
+  display: flex;
+  gap: 12px;
+}
+
+.sidebar__image {
+  max-width: 36px;
+}
+
+.sidebar__footer  {
+  padding: 8px 16px;
+  margin-top: auto;
+  background: cyan;
 }
