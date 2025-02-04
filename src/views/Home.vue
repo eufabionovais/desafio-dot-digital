@@ -74,7 +74,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchMovies', 'addMovieToCart']),
+    ...mapActions(['fetchMovies', 'addMovieToCart', 'toggleSidebar']),
     getGenreNames(genreIds) {
 
       return genreIds
@@ -86,6 +86,7 @@ export default {
 
     addToShopCart(movie) {
       this.addMovieToCart(movie);
+      this.toggleSidebar(true);
     },
 
     handleScroll() {

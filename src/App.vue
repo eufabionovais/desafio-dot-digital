@@ -69,10 +69,13 @@ export default {
         return  total;
       },0)
     },
-
-
-
   },  
+
+  watch: {
+    '$route'(to, from) {
+      this.toggleSidebar(false)
+    }
+  }  
 
 
 }

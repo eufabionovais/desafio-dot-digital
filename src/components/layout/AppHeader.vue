@@ -11,7 +11,7 @@
      <div class="actions">
       <button>Favoritos (0)</button>
 
-      <button>Carrinho ({{ totalItensShopCart }})</button>
+      <button @click="toggleSidebar(sidebarStatus = !sidebarStatus)">Carrinho ({{ totalItensShopCart }})</button>
      </div>
 
     </div>

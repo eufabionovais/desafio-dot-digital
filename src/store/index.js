@@ -70,7 +70,6 @@ const store = createStore({
     },
     
     EMPTY_SHOP_CART(state) {
-      debugger
       state.shopCart.forEach((currentItem) => {
         currentItem.quantity = 1;
       })
@@ -175,8 +174,8 @@ const store = createStore({
       commit('EMPTY_SHOP_CART')
     },
     
-    toggleSidebar({commit}) {
-      commit('TOGGLE_SIDEBAR')
+    toggleSidebar({commit}, status) {
+      commit('TOGGLE_SIDEBAR', status)
     }
 
 
