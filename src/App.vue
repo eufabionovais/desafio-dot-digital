@@ -31,7 +31,7 @@
 
     </div>
     <footer class="sidebar__footer">
-        <p>Total <span class="total">R$19,98</span></p>
+        <p>Total <span class="total">{{ brCurrency(totalValue) }}</span></p>
         <button type="button">Finalizar</button>
     </footer>
 
@@ -49,12 +49,28 @@ export default {
     AppHeader
   },
   methods: {
-    ...mapActions(['addMovieToCart', 'removeMovieFromCart'])
+    ...mapActions(['addMovieToCart', 'removeMovieFromCart']),
+    brCurrency(value) {
+      console.log(value)
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || '';
+    },    
   },
   computed: {
     ...mapState(['shopCart']),
     ...mapGetters(['loading', 'error']),
+
+    totalValue() {
+      return this.shopCart.reduce((acumulator, currentItem) => {
+        console.log("Acumulador", acumulator)
+        console.log("item price", currentItem.price);
+        const total = Number(acumulator) + Number(currentItem.price);
+        return  total;
+      },0)
+    }
+
   },  
+
+
 }
 </script>
 

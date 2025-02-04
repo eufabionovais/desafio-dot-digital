@@ -10,7 +10,7 @@
 
      <div class="actions">
       <button>Favoritos</button>
-      <button>Carrinho</button>
+      <button>Carrinho ({{ shopCart.length }})</button>
      </div>
 
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import AppLogo from './AppLogo.vue';
 export default {
   components: {
@@ -45,6 +45,9 @@ export default {
        this.searchString = '';
       }
 
+    },
+    computed: {
+      ...mapGetters(['shopCart']),
     }  
 }
 </script>

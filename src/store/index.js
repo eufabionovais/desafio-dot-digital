@@ -26,7 +26,7 @@ const store = createStore({
         return {
           ...result,
           image: `https://image.tmdb.org/t/p/w342${result.poster_path}`,
-          price: `79,99`,
+          price: 79.99,
           quantity: 1 
         }
       })
