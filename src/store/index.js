@@ -52,11 +52,14 @@ const store = createStore({
     },
 
     REMOVE_MOVIE_FROM_CART(state, movie) {
-      debugger
       state.shopCart = state.shopCart.filter((currentMovie) => {
         return currentMovie.id !== movie.id
       })
-    }    
+    } ,
+    
+    EMPTY_SHOP_CART(state) {
+      state.shopCart = state.shopCart = []
+    }     
 
   },
   actions: {
@@ -147,7 +150,11 @@ const store = createStore({
 
     async removeMovieFromCart({commit, state}, movie) {
       commit('REMOVE_MOVIE_FROM_CART', movie)
-    }     
+    },   
+    
+    async emptyShopCart({commit}) {
+      commit('EMPTY_SHOP_CART')
+    }       
 
 
   },

@@ -10,7 +10,7 @@
   <aside class="sidebar">
     <header class="sidebar__header">
       <h3>Meu carrinho</h3>
-      <button type="button">Esvaziar</button>
+      <button type="button" @click="emptyShopCart()">Esvaziar</button>
     </header>
     <div class="sidebar__content">
       <ul>
@@ -49,11 +49,11 @@ export default {
     AppHeader
   },
   methods: {
-    ...mapActions(['addMovieToCart', 'removeMovieFromCart']),
+    ...mapActions(['addMovieToCart', 'removeMovieFromCart', 'emptyShopCart']),
     brCurrency(value) {
-      console.log(value)
       return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || '';
-    },    
+    }, 
+
   },
   computed: {
     ...mapState(['shopCart']),
