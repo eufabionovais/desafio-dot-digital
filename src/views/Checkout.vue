@@ -38,7 +38,7 @@
           
           <div class="form-group">
             <label for="cep">CEP</label>
-            <input type="text" id="cep" name="cep" v-mask="['#####-###']" v-model="cep">
+            <input type="text" id="cep" name="cep" v-mask="['#####-###']" v-model="cep" @blur="searchCEP">
             <div class="input-errors" v-for="error of v$.cep.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>               
@@ -62,7 +62,15 @@
           
           <div class="form-group">
             <label for="estado">Estado</label>
-            <input type="text" id="estado" name="estado" v-model="estado">
+
+            <select name="estado" id="estado" v-model="estado">
+              <option value="" selected disabled>Selecione o Estado</option>
+              <option v-for="(valor, chave) in estadosBrasileiros" :key="chave" :value="chave" :selected="valor === estado">
+              {{ valor }}
+              </option>
+            </select>
+
+
             <div class="input-errors" v-for="error of v$.estado.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>                  
@@ -84,6 +92,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { isValidCPF } from "../validators/custom-validators"; 
 import {mask} from 'vue-the-mask';
+import { estadosBrasileiros } from "../utils/estados-brasileiros";
 export default {
   directives: {mask},
   setup () {
@@ -91,6 +100,7 @@ export default {
   },
   data() {
     return {
+      estadosBrasileiros: estadosBrasileiros,
       nome: '',
       cpf: '',
       celular: '',
@@ -145,6 +155,22 @@ export default {
       alert('Formulário enviado com sucesso!');
       // Lógica para enviar o formulário
     },    
+
+    async searchCEP() {
+      const cleanCEP = this.cep.replace('-','');
+      console.log(cleanCEP)
+      const response = await fetch(`https://viacep.com.br/ws/${cleanCEP}/json/`);
+      if(!response.ok) {
+        throw new Error(`Erro na requisição: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      this.endereco = data.logradouro;
+      this.cidade = data.localidade;
+      this.estado = data.uf;
+      console.log(data)
+    }
   }
 }
 </script>
