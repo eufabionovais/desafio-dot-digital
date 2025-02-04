@@ -9,8 +9,9 @@
      </form>
 
      <div class="actions">
-      <button>Favoritos</button>
-      <button>Carrinho ({{ shopCart.length }})</button>
+      <button>Favoritos (0)</button>
+
+      <button>Carrinho ({{ totalItensShopCart }})</button>
      </div>
 
     </div>
@@ -31,7 +32,7 @@ export default {
     },
     methods: {
 
-      ...mapActions(['fetchMovies', 'searchMovies']),
+      ...mapActions(['fetchMovies', 'searchMovies', 'toggleSidebar']),
 
       async searchForMovies() {
         if(this.searchString === '' || this.searchString.length <= 3) {
@@ -48,6 +49,12 @@ export default {
     },
     computed: {
       ...mapGetters(['shopCart']),
+      ...mapState(['sidebarStatus']),
+      totalItensShopCart() {
+        return this.shopCart.reduce((acumulator, currentItem) => {
+          return acumulator += currentItem.quantity;
+        },0)
+      }
     }  
 }
 </script>

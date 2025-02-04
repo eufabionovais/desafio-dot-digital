@@ -17,7 +17,8 @@ const store = createStore({
     totalResults: 0,
     loading: false,
     error: null,
-    shopCart: []
+    shopCart: [],
+    sidebarStatus: false,
   },
   mutations: {
     SET_MOVIES(state, payload) {
@@ -48,18 +49,37 @@ const store = createStore({
     },
 
     ADD_MOVIE_TO_CART(state, movie) {
+
+      const addedMovieIndex = state.shopCart.findIndex((currentItem) => {
+        return currentItem.id === movie.id
+      })
+
+      if(addedMovieIndex !== -1) {
+        state.shopCart[addedMovieIndex].quantity += 1;
+        return
+      }
+
       state.shopCart.push(movie)
+      state.sidebarStatus = true;
     },
 
     REMOVE_MOVIE_FROM_CART(state, movie) {
       state.shopCart = state.shopCart.filter((currentMovie) => {
         return currentMovie.id !== movie.id
       })
-    } ,
+    },
     
     EMPTY_SHOP_CART(state) {
-      state.shopCart = state.shopCart = []
-    }     
+      debugger
+      state.shopCart.forEach((currentItem) => {
+        currentItem.quantity = 1;
+      })
+      state.shopCart = []
+    },
+    
+    TOGGLE_SIDEBAR(state, status) {
+      state.sidebarStatus = status;
+    }
 
   },
   actions: {
@@ -86,9 +106,8 @@ const store = createStore({
         );
 
         const data = await response.json();
-        console.log("data fetched movies", data)
 
-        commit('SET_MOVIES', data); // Atualiza o estado com os dados recebidos
+        commit('SET_MOVIES', data); 
       } catch (error) {
         console.error('Erro ao buscar filmes:', error);
          commit('SET_ERROR', 'Erro ao carregar produtos.');
@@ -134,7 +153,7 @@ const store = createStore({
           state.totalResults = 0;
 
           commit('SET_MOVIES', data);
-          console.log('Filmes encontratos:', data);
+
 
         } catch (error) {
             console.log("Error", error)
@@ -154,7 +173,11 @@ const store = createStore({
     
     async emptyShopCart({commit}) {
       commit('EMPTY_SHOP_CART')
-    }       
+    },
+    
+    toggleSidebar({commit}) {
+      commit('TOGGLE_SIDEBAR')
+    }
 
 
   },
@@ -167,6 +190,7 @@ const store = createStore({
     currentPage: (state) => state.currentPage,
     totalPages: (state) => state.totalPages,
     totalResults: (state) => state.totalResults,
+    sidebarStatus: (state) => state.sidebarStatus,
     loading: (state) => state.loading,
     error: (state) => state.error,
   },

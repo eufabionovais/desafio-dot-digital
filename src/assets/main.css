@@ -30,6 +30,11 @@ body {
   background: blue;
   display: flex;
   flex-direction: column;
+  transition: 0.4s;
+  transform: translateX(100%);
+  &.opened {
+    transform: translateX(0);
+  }  
 }
 
 .sidebar__header  {

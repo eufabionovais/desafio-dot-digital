@@ -7,10 +7,13 @@
     </div>
   </main>
 
-  <aside class="sidebar">
+  <aside class="sidebar" :class="{'opened': sidebarStatus}">
     <header class="sidebar__header">
-      <h3>Meu carrinho</h3>
-      <button type="button" @click="emptyShopCart()">Esvaziar</button>
+      <button @click="toggleSidebar(false)">Fechar</button>
+      <div>
+        <h3>Meu carrinho</h3>
+        <button type="button" @click="emptyShopCart()">Esvaziar</button>
+      </div>
     </header>
     <div class="sidebar__content">
       <ul>
@@ -32,7 +35,9 @@
     </div>
     <footer class="sidebar__footer">
         <p>Total <span class="total">{{ brCurrency(totalValue) }}</span></p>
-        <button type="button">Finalizar</button>
+        <router-link to="/checkout" exact disabled>
+          <button button type="button">Finalizar</button>
+        </router-link>
     </footer>
 
   </aside>
@@ -41,7 +46,6 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
-import { RouterLink, RouterView } from 'vue-router'
 import AppHeader from './components/layout/AppHeader.vue';
 
 export default {
@@ -49,7 +53,7 @@ export default {
     AppHeader
   },
   methods: {
-    ...mapActions(['addMovieToCart', 'removeMovieFromCart', 'emptyShopCart']),
+    ...mapActions(['addMovieToCart', 'removeMovieFromCart', 'emptyShopCart', 'toggleSidebar']),
     brCurrency(value) {
       return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || '';
     }, 
@@ -57,16 +61,16 @@ export default {
   },
   computed: {
     ...mapState(['shopCart']),
-    ...mapGetters(['loading', 'error']),
+    ...mapGetters(['loading', 'error', 'sidebarStatus']),
 
     totalValue() {
       return this.shopCart.reduce((acumulator, currentItem) => {
-        console.log("Acumulador", acumulator)
-        console.log("item price", currentItem.price);
-        const total = Number(acumulator) + Number(currentItem.price);
+        const total = Number(acumulator) + Number(currentItem.price) * currentItem.quantity;
         return  total;
       },0)
-    }
+    },
+
+
 
   },  
 
