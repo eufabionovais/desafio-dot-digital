@@ -80,15 +80,29 @@
 
         </form>
     </div>
-    <div class="checkout__shopcart">
-        <ShopCart :is-checkout="true">
+    <div class="checkout__shoppingcart">
+        <ShoppingCart :is-checkout="true">
           <template #content__footer>
             <h1>Footer Checkout</h1>
             <button @click="finalizarCompra">Finalizar compra!!</button>
           </template>
-        </ShopCart>
+        </ShoppingCart>
     </div>
   </div>
+
+   <BaseModal
+    :visible="isModalVisible"
+    title="Confirmação"
+    cancelText="Não, voltar"
+    confirmText="Sim, continuar"
+    :onCancel="handleCancel"
+    :onConfirm="handleConfirm"
+    @update:visible="isModalVisible = $event"
+  >
+    <p>Deseja realmente continuar com esta ação?</p>
+  </BaseModal>
+
+
 </template>
 
 <script>
@@ -98,11 +112,14 @@ import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { isValidCPF } from "../validators/custom-validators"; 
 import {mask} from 'vue-the-mask';
 import { estadosBrasileiros } from "../utils/estados-brasileiros";
-import ShopCart from '@/components/cart/ShoppingCart.vue';
+import ShoppingCart from '@/components/cart/ShoppingCart.vue';
+import BaseModal from '@/components/commons/BaseModal.vue';
+
 export default {
   directives: {mask},
   components: {
-    ShopCart
+    ShoppingCart,
+    BaseModal
   },
   setup () {
     return { v$: useVuelidate() }
@@ -117,7 +134,8 @@ export default {
       cep: '',
       endereco: '',
       cidade: '',
-      estado: ''
+      estado: '',
+      isModalVisible: false
     }
   },
   validations () {
@@ -181,8 +199,15 @@ export default {
     },
 
     finalizarCompra() {
-      alert("teste")
-    }
+      this.isModalVisible = true;
+    },
+
+    handleCancel() {
+        alert("CAncelar")
+      },
+      handleConfirm() {
+        alert("Confirmar")
+      }    
 
   }
 }

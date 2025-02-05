@@ -1,5 +1,5 @@
-// store/index.js
 import { createStore } from 'vuex';
+import VuexPersistence from 'vuex-persist'
 
 const baseUrl = `https://api.themoviedb.org/3`;
 const apiKey = '7b0e2c434489951eb3a12786a20218b8';
@@ -8,7 +8,10 @@ const genresUrl = `${baseUrl}/genre/movie/list?language=pt-BR&api_key=${apiKey}`
 const token = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YjBlMmM0MzQ0ODk5NTFlYjNhMTI3ODZhMjAyMThiOCIsIm5iZiI6MTY5ODEwNjkxMi42MDYwMDAyLCJzdWIiOiI2NTM3MGUyMDFmNzQ4YjAxM2ViNGRlNTciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.MponbgWZP9kc1xoVpC-h1vAxAVm6Kjlh2bvsrb5mC0c`; 
 
 // Cria o store
-const store = createStore({
+const store = createStore(
+  {
+    plugins: [new VuexPersistence().plugin],
+   
   state: {
     movies: [],
     genres: [],
