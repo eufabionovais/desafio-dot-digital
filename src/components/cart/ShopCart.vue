@@ -1,16 +1,5 @@
 <template>
-  <AppHeader />
-
-  <main class="main-content">
-    <div class="inner-content">
-      <RouterView />      
-    </div>
-  </main>
-
-  <aside class="sidebar" :class="{'opened': sidebarStatus}">
-
-    <ShopCart />
-    <!-- <header class="sidebar__header">
+    <header class="sidebar__header">
       <button @click="toggleSidebar(false)">Fechar</button>
       <div>
         <h3>Meu carrinho</h3>
@@ -37,37 +26,30 @@
         <router-link to="/checkout" exact disabled>
           <button button type="button">Finalizar</button>
         </router-link>
-    </footer> -->
-
-  </aside>
-
+    </footer>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
-import AppHeader from './components/layout/AppHeader.vue';
-import ShopCart from './components/cart/ShopCart.vue';
 
 export default {
-  components: {
-    AppHeader,
-    ShopCart
-  },
-
   methods: {
-    ...mapActions(['toggleSidebar']),
-  },  
-
-  computed: {
-    ...mapGetters(['loading', 'error', 'sidebarStatus']),    
-  },
-
-  watch: {
-    '$route'(to, from) {
-      this.toggleSidebar(false)
+    ...mapActions(['addMovieToCart', 'removeMovieFromCart', 'emptyShopCart', 'toggleSidebar']),
+    brCurrency(value) {
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || '';
     }
-  }  
+  },
+  computed: {
+    ...mapState(['shopCart']),
+    ...mapGetters(['loading', 'error', 'sidebarStatus']),
+
+    totalValue() {
+      return this.shopCart.reduce((acumulator, currentItem) => {
+        const total = Number(acumulator) + Number(currentItem.price) * currentItem.quantity;
+        return  total;
+      },0)
+    },
+  },    
 }
+
 </script>
-
-

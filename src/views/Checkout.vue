@@ -153,12 +153,11 @@ export default {
         return;
       }
       alert('Formulário enviado com sucesso!');
-      // Lógica para enviar o formulário
+      
     },    
 
     async searchCEP() {
       const cleanCEP = this.cep.replace('-','');
-      console.log(cleanCEP)
       const response = await fetch(`https://viacep.com.br/ws/${cleanCEP}/json/`);
       if(!response.ok) {
         throw new Error(`Erro na requisição: ${response.statusText}`);
@@ -169,7 +168,7 @@ export default {
       this.endereco = data.logradouro;
       this.cidade = data.localidade;
       this.estado = data.uf;
-      console.log(data)
+
     }
   }
 }
