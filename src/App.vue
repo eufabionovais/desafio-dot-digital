@@ -9,17 +9,21 @@
 
   <aside class="sidebar" :class="{'opened': sidebarStatus}">
 
-    <ShopCart />
+    <ShoppingCart :is-sidebar="true">
+        <template #content__footer>
+          <h1>Footer sidebar</h1>
+        </template>
+    </ShoppingCart>
     <!-- <header class="sidebar__header">
       <button @click="toggleSidebar(false)">Fechar</button>
       <div>
         <h3>Meu carrinho</h3>
-        <button type="button" @click="emptyShopCart()">Esvaziar</button>
+        <button type="button" @click="emptyShoppingCart()">Esvaziar</button>
       </div>
     </header>
     <div class="sidebar__content">
       <ul>
-        <li v-for="(movie, index) in shopCart" :key="index">
+        <li v-for="(movie, index) in shoppingCart" :key="index">
           <div class="sidebar__image-wrapper">
             <img :src="movie.image" :alt="movie.title" class="sidebar__image">
           </div>
@@ -44,14 +48,14 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import AppHeader from './components/layout/AppHeader.vue';
-import ShopCart from './components/cart/ShopCart.vue';
+import ShoppingCart from './components/cart/ShoppingCart.vue';
 
 export default {
   components: {
     AppHeader,
-    ShopCart
+    ShoppingCart
   },
 
   methods: {
