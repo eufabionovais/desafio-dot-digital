@@ -5,7 +5,7 @@
       <span class="dot"></span>
       <span class="dot"></span>
     </div>
-    <p>Carregando...</p>
+    <p>Carregando filmes...</p>
   </div>
 </template>
 
@@ -34,7 +34,7 @@
   border-radius: 50%;
   transform: scale(1);
   animation: carregando 0.5s linear infinite alternate-reverse;
-  background-color: blue;
+  background-color: #010E7E;
 }
 
 .loader .dot:nth-child(1) {

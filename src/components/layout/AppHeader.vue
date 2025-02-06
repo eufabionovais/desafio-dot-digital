@@ -4,7 +4,7 @@
      <AppLogo />
      <form @submit.prevent="searchForMovies" class="search-form">
       <div class="form-group-icon">
-        <input type="text" v-model="searchString" placeholder="Digite o nome do filme para buscar">
+        <input type="text" v-model="searchString" placeholder="Qual filme deseja encontrar?">
         <button class="btn" type="submit" aria-label="Buscar filmes" :disabled="searchString.length < 3"><v-icon name="bi-search" scale="1.2" class="icon" /></button>
       </div>
       <button class="btn" type="button" aria-label="Limpar filtro"  @click="resetMoviesList" :disabled="!searchString.length"><v-icon name="md-clear-round" class="icon" scale="1.2" /></button>
@@ -77,6 +77,7 @@ header {
 .inner-content {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
   align-items: center;
   height: 100%;
 }
@@ -109,7 +110,7 @@ header {
 }
 
 .search-form {
-  display: none;
+  display: flex;
   gap: 8px;
   .icon {
     fill: #aaa;
@@ -126,6 +127,7 @@ header {
     border-radius: 20px;
     border: solid 1px #cacaca;
     min-width: 150px;    
+    max-width: 195px;
     padding-right: 50px;
     font-size: 16px;
   }

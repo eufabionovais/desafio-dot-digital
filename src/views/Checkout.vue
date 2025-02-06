@@ -4,24 +4,24 @@
     <div class="checkout__form">
         <form  @submit.prevent="submitForm()">
           <div class="form-group w-full">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" v-model="nome">
+            <label for="nome">Nome <i class="mandatory">*</i></label>
+            <input type="text" id="nome" name="nome" v-model="nome" placeholder="Digite seu nome completo">
             <div class="input-errors" v-for="error of v$.nome.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="cpf">CPF</label>
-            <input type="text" id="cpf" name="cpf" v-mask="['###.###.###-##']" v-model="cpf">
+            <label for="cpf">CPF <i class="mandatory">*</i></label>
+            <input type="text" id="cpf" name="cpf" v-mask="['###.###.###-##']" v-model="cpf" placeholder="000.000.000-00">
             <div class="input-errors" v-if="v$.cpf.$errors.length">
               <div class="error-msg">{{  v$.cpf.$errors[0].$message }}</div>
             </div>
           </div>         
           
           <div class="form-group">
-            <label for="celular">Celular</label>
-            <input type="text" id="celular" name="celular" v-mask="['(##) #####-####']" v-model="celular">
+            <label for="celular">Celular <i class="mandatory">*</i></label>
+            <input type="text" id="celular" name="celular" v-mask="['(##) #####-####']" v-model="celular" placeholder="(00) 00000-0000">
        
             <div class="input-errors" v-for="error of v$.celular.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
@@ -29,39 +29,39 @@
           </div>            
           
           <div class="form-group w-full">
-            <label for="email">E-mail</label>
-            <input type="text" id="email" name="email" v-model="email">
+            <label for="email">E-mail <i class="mandatory">*</i></label>
+            <input type="text" id="email" name="email" v-model="email" placeholder="seuemail@exemplo.com.br">
             <div class="input-errors" v-for="error of v$.email.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>    
           </div>          
           
           <div class="form-group">
-            <label for="cep">CEP</label>
-            <input type="text" id="cep" name="cep" v-mask="['#####-###']" v-model="cep" @blur="searchCEP">
+            <label for="cep">CEP <i class="mandatory">*</i></label>
+            <input type="text" id="cep" name="cep" v-mask="['#####-###']" v-model="cep" @blur="searchCEP" placeholder="00000-000">
             <div class="input-errors" v-for="error of v$.cep.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>               
           </div>   
           
-          <div class="form-group w-full">
-            <label for="endereco">Endereço</label>
-            <input type="text" id="endereco" name="endereco" v-model="endereco">
+          <div class="form-group">
+            <label for="endereco">Endereço <i class="mandatory">*</i></label>
+            <input type="text" id="endereco" name="endereco" v-model="endereco" placeholder="Rua, Avenida, Número">
             <div class="input-errors" v-for="error of v$.endereco.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>      
           </div>  
           
           <div class="form-group">
-            <label for="cidade">Cidade</label>
-            <input type="text" id="cidade" name="cidade" v-model="cidade">
+            <label for="cidade">Cidade <i class="mandatory">*</i></label>
+            <input type="text" id="cidade" name="cidade" v-model="cidade" placeholder="Sua Cidade">
             <div class="input-errors" v-for="error of v$.cidade.$errors" :key="error.$uid">
               <div class="error-msg">{{ error.$message }}</div>
             </div>      
           </div> 
           
           <div class="form-group">
-            <label for="estado">Estado</label>
+            <label for="estado">Estado <i class="mandatory">*</i></label>
 
             <select name="estado" id="estado" v-model="estado">
               <option value="" selected disabled>Selecione o Estado</option>
@@ -76,10 +76,13 @@
 
         </form>
     </div>
-    <div class="checkout__shoppingcart">
+    <div class="checkout__shopping-cart">
         <ShoppingCart :is-sidebar="false">
           <template #content__footer>
-            <button class="btn btn-secondary" @click="finalizarCompra">Finalizar compra</button>
+            <div class="sidebar__footer">
+              <p class="sidebar__total">Total <span class="total">{{ brCurrency(totalValue) }}</span></p>
+              <button class="btn btn-secondary" @click="finalizarCompra">Finalizar compra</button>
+            </div>
           </template>
         </ShoppingCart>
     </div>
@@ -87,8 +90,8 @@
 
    <BaseModal
     :visible="isModalVisible"
-    :title="`Obrigado ${nome}!`"
-    confirmText="Ir para a Loja"
+    :title="`Obrigado, ${nome}!`"
+    confirmText="Voltar para a Loja"
     :onConfirm="handleConfirm"
     @update:visible="isModalVisible = $event"
   >
@@ -99,7 +102,8 @@
 </template>
 
 <script>
-
+import { currencies } from "../mixins/currency-mixin";
+import { cartTotal } from "@/mixins/cart-total-mixin";
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { isValidCPF } from "../validators/custom-validators"; 
@@ -110,6 +114,7 @@ import ShoppingCart from '@/components/cart/ShoppingCart.vue';
 
 export default {
   directives: {mask},
+  mixins: [currencies, cartTotal],
   components: {
     ShoppingCart
   },
@@ -167,7 +172,6 @@ export default {
   methods: {
     
     submitForm() {
-      debugger
       if (this.v$.$validate()) {
         if(this.v$.$invalid) {
           return 
@@ -211,6 +215,10 @@ export default {
 
 <style scoped lang="scss">
 
+.checkout__shopping-cart {
+  margin-top: 24px;
+}
+
 @media (min-width: 768px) {
   
   .checkout-wrapper {
@@ -238,7 +246,23 @@ form {
   button {
     margin-top: 24px;
   }
-
 }
+
+.sidebar__footer {
+  padding-bottom: 20px;
+}
+
+.sidebar__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.mandatory {
+  color: red;
+}
+
 </style>
 

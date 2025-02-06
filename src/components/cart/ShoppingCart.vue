@@ -74,9 +74,12 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
+import { currencies } from '@/mixins/currency-mixin';
 
 export default {
 
+
+  mixins: [currencies],
   props: {
     isSidebar: {
       type: Boolean,
@@ -86,9 +89,9 @@ export default {
 
   methods: {
     ...mapActions(['addMovieToCart', 'removeMovieFromCart', 'emptyShopCart', 'toggleSidebar']),
-    brCurrency(value) {
-      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || '';
-    }
+    // brCurrency(value) {
+    //   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || '';
+    // }
   },
   computed: {
     ...mapState(['shopCart']),

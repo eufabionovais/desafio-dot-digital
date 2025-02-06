@@ -3,7 +3,9 @@
     <div class="modal-container">
       <header class="modal-header">
         <h2>{{ title }}</h2>
-        <button class="close-button" @click="closeModal">×</button>
+        <button class="close-button" @click="closeModal">
+          <v-icon name="md-clear-round"  />
+        </button>
       </header>
 
       <div class="modal-body">
@@ -12,7 +14,7 @@
 
       <footer class="modal-footer">
         <!-- <button @click="handleCancel">{{ cancelText }}</button> -->
-        <button @click="handleConfirm">{{ confirmText }}</button>
+        <button @click="handleConfirm" class="btn btn-secondary">{{ confirmText }}</button>
       </footer>
     </div>
   </div>
@@ -47,7 +49,7 @@ export default {
     },
     autoClose: {
       type: Boolean,
-      default: true // O modal fecha automaticamente ao confirmar ou cancelar
+      default: true 
     }
   },
   methods: {
@@ -104,6 +106,7 @@ export default {
 
 .modal-header h2 {
   margin: 0;
+  font-weight: 500;
 }
 
 .close-button {
@@ -114,18 +117,18 @@ export default {
 }
 
 .modal-body {
-  padding: 15px 0;
+  padding: 24px 0;
 }
 
 .modal-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 10px;
   padding-top: 10px;
   border-top: 1px solid #ddd;
 }
 
-.modal-footer button {
+/* .modal-footer button {
   padding: 8px 12px;
   border: none;
   cursor: pointer;
@@ -139,5 +142,5 @@ export default {
 .modal-footer button:last-child {
   background: #007bff;
   color: white;
-}
+} */
 </style>

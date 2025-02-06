@@ -112,6 +112,7 @@ body {
 
 .sidebar__content.is-checkout-page {
   padding: 0;
+  isolation: isolate;
 }
 
 
@@ -125,6 +126,22 @@ body {
 .sidebar__content.is-checkout-page .sidebar__table {
   margin-top: 48px;
 }
+
+.sidebar__content.is-checkout-page .sidebar__table .tooltip {
+  margin-left: -15px;
+}
+
+/* .sidebar__content.is-checkout-page .sidebar__table tbody {
+  display: block;
+  max-height: 100px;
+  overflow: auto;
+}
+
+.sidebar__content.is-checkout-page .sidebar__table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+} */
 
 
 .sidebar__content li {
@@ -211,6 +228,13 @@ body {
   }
 
   .sidebar__content.is-checkout-page .sidebar__table {
-    margin-top: 24px;
+    margin-top: 0;
+    padding-bottom: 12px;
   }  
+
+  .sidebar__content.is-checkout-page .sidebar__table th {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
 }
