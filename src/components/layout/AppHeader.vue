@@ -9,12 +9,14 @@
       </div>
       <button class="btn" type="button" aria-label="Limpar filtro"  @click="resetMoviesList" :disabled="!searchString.length"><v-icon name="md-clear-round" class="icon" scale="1.2" /></button>
      </form>
+
+
      <div class="actions">
       <BaseTooltip label="Favoritos">
-        <button class="btn" aria-label="Filmes adicionados aos favoritos"><v-icon name="bi-heart-fill" fill="#ff0000" scale="1.5" /></button>
+        <button class="btn" aria-label="Filmes adicionados aos favoritos" @click="toggleAsideContent('favorites')"><v-icon :name="favorites.length ? 'bi-heart-fill' : 'bi-heart' " fill="#ff0000" scale="1.5" /></button>
       </BaseTooltip>
       <BaseTooltip label="Carrinho">
-      <button class="btn btn-shopping-cart" @click="$store.commit('TOGGLE_SIDEBAR', !sidebarStatus)"  aria-label="Filmes adicionados ao carrinho"><v-icon name="bi-cart" scale="1.5" /> <span class="shopping-cart-total">{{ totalItensShopCart }}</span></button>
+      <button class="btn btn-shopping-cart" @click="toggleAsideContent('shopping-cart')"  aria-label="Filmes adicionados ao carrinho"><v-icon name="bi-cart" scale="1.5" /> <span class="shopping-cart-total">{{ totalItensShopCart }}</span></button>
       </BaseTooltip>
      </div>
 
@@ -23,7 +25,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex';
 import AppLogo from './AppLogo.vue';
 export default {
   components: {
@@ -36,7 +38,17 @@ export default {
     },
     methods: {
 
-      ...mapActions(['fetchMovies', 'searchMovies', 'toggleSidebar']),
+      ...mapActions(['fetchMovies', 'searchMovies', 'toggleSidebar', 'toggleSidebarContent']),
+
+       ...mapMutations(['TOGGLE_SIDEBAR']),
+
+      toggleSidebar(content) {
+        this.TOGGLE_SIDEBAR(content);
+      },       
+
+      toggleAsideContent(content) {
+        this.toggleSidebarContent(content);
+      },  
 
       async searchForMovies() {
         if(this.searchString === '' || this.searchString.length <= 3) {
@@ -52,7 +64,7 @@ export default {
 
     },
     computed: {
-      ...mapGetters(['shopCart']),
+      ...mapGetters(['shopCart', 'favorites', 'sidebarContent']),
       ...mapState(['sidebarStatus']),
       totalItensShopCart() {
         return this.shopCart.reduce((acumulator, currentItem) => {
@@ -60,12 +72,9 @@ export default {
         },0)
       },
 
-
-
       isCheckoutPage() {
-        return this.$route.name === 'checkout'; // Certifique-se de que o nome da rota de checkout seja esse
-      }
-    
+        return this.$route.name === 'checkout'; 
+      }   
 
     }  
 }

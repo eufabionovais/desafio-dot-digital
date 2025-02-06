@@ -104,7 +104,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 .sidebar__header {
   background: #010E7E;

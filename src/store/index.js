@@ -21,7 +21,9 @@ const store = createStore(
     loading: false,
     error: null,
     shopCart: [],
+    favorites: [],
     sidebarStatus: false,
+    sidebarContent: 'shopping-cart',
   },
   mutations: {
     SET_MOVIES(state, payload) {
@@ -31,7 +33,8 @@ const store = createStore(
           ...result,
           image: `https://image.tmdb.org/t/p/w342${result.poster_path}`,
           price: 79.99,
-          quantity: 1 
+          quantity: 1,
+          isFavorite: false 
         }
       })
 
@@ -53,6 +56,8 @@ const store = createStore(
 
     ADD_MOVIE_TO_CART(state, movie) {
 
+      state.sidebarContent = 'shopping-cart';
+
       const addedMovieIndex = state.shopCart.findIndex((currentItem) => {
         return currentItem.id === movie.id
       })
@@ -67,6 +72,12 @@ const store = createStore(
     },
 
     REMOVE_MOVIE_FROM_CART(state, movie) {
+
+      state.shopCart.forEach((currentItem) => {
+        if(movie.id === currentItem.id) {}
+        currentItem.quantity = 1;
+      })      
+
       state.shopCart = state.shopCart.filter((currentMovie) => {
         return currentMovie.id !== movie.id
       })
@@ -78,10 +89,40 @@ const store = createStore(
       })
       state.shopCart = []
     },
+
+    SET_FAVORITE(state, movie) {
+      const movieIndex = state.favorites.findIndex(currentItem => currentItem.id === movie.id)
+
+      if(movieIndex === -1) {
+        state.favorites.push(movie)
+        return
+      }
+      state.favorites.splice(movieIndex, 1);
+    },
     
+    REMOVE_FAVORITE(state, movie) {
+        debugger
+        state.favorites = state.favorites.filter((currentItem) => {
+            return currentItem.id !== movie.id;
+        })
+    },
+
+    EMPTY_FAVORITES(state) {
+      state.favorites = []
+    },    
+
     TOGGLE_SIDEBAR(state, status) {
       state.sidebarStatus = status;
-    }
+    },
+    
+    TOGGLE_SIDEBAR_CONTENT(state, content) {
+        if (state.sidebarContent === content) {
+          state.sidebarStatus = !state.sidebarStatus;
+          return
+        } 
+        state.sidebarContent = content;
+        state.sidebarStatus = true;             
+    }    
 
   },
   actions: {
@@ -177,21 +218,40 @@ const store = createStore(
         }
     },
     
-    addMovieToCart({commit, state}, movie) {
+    addMovieToCart({commit}, movie) {
       commit('ADD_MOVIE_TO_CART', movie)
     }, 
 
-    removeMovieFromCart({commit, state}, movie) {
+    removeMovieFromCart({commit}, movie) {
       commit('REMOVE_MOVIE_FROM_CART', movie)
     },   
     
     emptyShopCart({commit}) {
       commit('EMPTY_SHOP_CART')
     },
+
+    toggleMovieAsFavorite({commit}, movie) {
+      commit('SET_FAVORITE', movie)
+    },
+
+    removeFavorite({commit}, movie) {
+      debugger
+      commit("REMOVE_FAVORITE", movie)
+    },
+
+    emptyFavorites({commit}) {
+      commit('EMPTY_FAVORITES')
+    },    
     
     toggleSidebar({commit}, status) {
       commit('TOGGLE_SIDEBAR', status)
-    }  },
+    },
+
+    toggleSidebarContent({commit}, content) {
+      commit("TOGGLE_SIDEBAR_CONTENT", content)
+    }
+  
+  },
 
 
   getters: {
@@ -202,6 +262,14 @@ const store = createStore(
     totalPages: (state) => state.totalPages,
     totalResults: (state) => state.totalResults,
     sidebarStatus: (state) => state.sidebarStatus,
+    favorites: (state) => state.favorites,
+    isFavorite: (state) => {
+      return (movieId) => {
+        const isFavorite = state.favorites.findIndex(currentItem => currentItem.id === movieId);
+        return isFavorite !== -1;
+      }
+    },
+    sidebarContent: (state) => state.sidebarContent,
     loading: (state) => state.loading,
     error: (state) => state.error,
   },

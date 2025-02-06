@@ -8,8 +8,8 @@
           <p class="movie__launch">{{ formatDate(movie.release_date) }}</p>
           <p class="movie__rate"><v-icon name="bi-star-fill" />{{ (movie.vote_average).toFixed(1) }}</p>
         </div>
-        <button class="movie-card__favorite-button btn">
-          <v-icon name="bi-heart-fill" scale="1.5" fill="#fff" />
+        <button class="movie-card__favorite-button btn" @click="setFavorite(movie)">
+          <v-icon :name="isFavorite(movie.id) ? 'bi-heart-fill' : 'bi-heart'" scale="1.5" :fill=" isFavorite(movie.id) ? '#ff0000' : '#fff' " />
         </button>
       </div>
       <div class="movie-card__content">
@@ -57,11 +57,11 @@ export default {
 
   computed: {
     ...mapState(['genres', 'currentPage', 'totalPages', 'totalResults']),
-    ...mapGetters(['loading', 'error']),
+    ...mapGetters(['loading', 'error', 'favorites', 'isFavorite']),
   },
 
   methods: {
-    ...mapActions(['fetchMovies', 'addMovieToCart', 'toggleSidebar']),
+    ...mapActions(['fetchMovies', 'addMovieToCart', 'toggleSidebar', 'toggleMovieAsFavorite']),
     getGenreNames(genreIds) {
 
       return genreIds
@@ -76,6 +76,11 @@ export default {
       this.toggleSidebar(true);
     },
 
+    setFavorite(movie) {
+      this.toggleMovieAsFavorite(movie);
+    },
+
+
     handleScroll() {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
       if (scrollTop + clientHeight >= scrollHeight - 100 && !this.loading) {
@@ -83,31 +88,7 @@ export default {
       }
     },
 
-    // formatDate(date) {
-    //   if(!date) {
-    //     return
-    //   }
-    //   const splittedDate = date.split("-");
-    //   const [year, month, day] = splittedDate;
-    //   const roundedMonth = Math.round(month);
 
-    //   const brazilianMonths = {
-    //     0: "Janeiro",
-    //     1: "Fevereiro",
-    //     2: "Março",
-    //     3: "Abril",
-    //     4: "Maio",
-    //     5: "Junho",
-    //     6: "Julho",
-    //     7: "Agosto",
-    //     8: "Setembro",
-    //     9: "Outubro",
-    //     10: "Novembro",
-    //     11: "Dezembro",
-    //   }
-      
-    //   return `${day} de ${brazilianMonths[roundedMonth - 1]}, ${year}`;
-    // }
 
   }
 
@@ -123,6 +104,11 @@ export default {
     box-shadow: 0 0 6px 6px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
+    &:hover {
+      .movie-card__image {
+        scale: 1.05
+      }
+    }
   }
 
   .movie__launch-and-rate {
@@ -160,11 +146,13 @@ export default {
 
   .movie-card__image-wrapper {
     position: relative;
+    overflow: hidden;
   }
 
   .movie-card__image {
     width: 100%;
     min-height: 480px;
+    transition: 0.8s;
   }
 
   .movie-card__content {
