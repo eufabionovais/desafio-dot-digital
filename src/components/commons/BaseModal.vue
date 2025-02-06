@@ -1,22 +1,19 @@
 <template>
   <div v-if="visible" class="modal-overlay">
     <div class="modal-container">
-      <!-- Header -->
-      <div class="modal-header">
+      <header class="modal-header">
         <h2>{{ title }}</h2>
         <button class="close-button" @click="closeModal">×</button>
-      </div>
+      </header>
 
-      <!-- Conteúdo Dinâmico -->
       <div class="modal-body">
         <slot></slot>
       </div>
 
-      <!-- Footer -->
-      <div class="modal-footer">
-        <button @click="handleCancel">{{ cancelText }}</button>
+      <footer class="modal-footer">
+        <!-- <button @click="handleCancel">{{ cancelText }}</button> -->
         <button @click="handleConfirm">{{ confirmText }}</button>
-      </div>
+      </footer>
     </div>
   </div>
 </template>

@@ -162,6 +162,7 @@ const store = createStore(
         }
         finally {
           console.log("Acabou")
+          commit('SET_LOADING', false);
         }
     },
     

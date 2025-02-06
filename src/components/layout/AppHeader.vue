@@ -2,16 +2,20 @@
   <header>
     <div class="inner-content">
      <AppLogo />
-     <form @submit.prevent="searchForMovies">
-      <input type="text" v-model="searchString">
-      <button type="submit">Buscar</button>
-      <button type="button"  @click="resetMoviesList">Limpar</button>
+     <form @submit.prevent="searchForMovies" class="search-form">
+      <div class="form-group-icon">
+        <input type="text" v-model="searchString" placeholder="Digite o nome do filme para buscar">
+        <button class="btn" type="submit" aria-label="Buscar filmes" :disabled="searchString.length < 3"><v-icon name="bi-search" scale="1.2" class="icon" /></button>
+      </div>
+      <button class="btn" type="button" aria-label="Limpar filtro"  @click="resetMoviesList" :disabled="!searchString.length"><v-icon name="md-clear-round" class="icon" scale="1.2" /></button>
      </form>
-
      <div class="actions">
-      <button>Favoritos (0)</button>
-
-      <button @click="$store.commit('TOGGLE_SIDEBAR', !sidebarStatus)">Carrinho ({{ totalItensShopCart }})</button>
+      <BaseTooltip label="Favoritos">
+        <button class="btn" aria-label="Filmes adicionados aos favoritos"><v-icon name="bi-heart-fill" fill="#ff0000" scale="1.5" /></button>
+      </BaseTooltip>
+      <BaseTooltip label="Carrinho">
+      <button class="btn btn-shopping-cart" @click="$store.commit('TOGGLE_SIDEBAR', !sidebarStatus)"  aria-label="Filmes adicionados ao carrinho"><v-icon name="bi-cart" scale="1.5" /> <span class="shopping-cart-total">{{ totalItensShopCart }}</span></button>
+      </BaseTooltip>
      </div>
 
     </div>
@@ -59,14 +63,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 header {
   height: 80px;
-  background: green;
+  background: #fff;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.05);
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
+  z-index: 99;
 }
 .inner-content {
   display: flex;
@@ -74,5 +80,76 @@ header {
   align-items: center;
   height: 100%;
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-shopping-cart {
+  position: relative;
+}
+
+.shopping-cart-total {
+    background: red;
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    font-size: 12px;
+    min-width: 22px;
+    aspect-ratio: 1;
+    font-weight: 500;
+    color: #fff;
+}
+
+.search-form {
+  display: none;
+  gap: 8px;
+  .icon {
+    fill: #aaa;
+  }  
+}
+
+
+.form-group-icon {
+  display: flex;
+  position: relative;
+  input {
+    padding: 8px 16px;
+    height: 40px;
+    border-radius: 20px;
+    border: solid 1px #cacaca;
+    min-width: 150px;    
+    padding-right: 50px;
+    font-size: 16px;
+  }
+  .btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+  }
+}
+
+
+@media (min-width: 768px) {
+  .search-form {
+    display: flex;
+  }
+  .form-group-icon {
+    input {
+      min-width: 450px;
+      
+    }
+  }
+}
+
 </style>
 

@@ -1,26 +1,32 @@
 <template>
-  <div :class="['shopping-cart', { 'is-sidebar': isSidebar, 'is-checkout': isCheckout }]">
-    <header class="sidebar__header">
-      <button @click="toggleSidebar(false)">Fechar</button>
-      <div>
-        <h3>Meu carrinho</h3>
-        <button type="button" @click="emptyShopCart()">Esvaziar</button>
+
+    <header class="sidebar__header"  v-if="isSidebar">
+      <div class="sidebar__header-content">
+        
+          <h3 class="sidebar__title">Meu carrinho</h3>
+          <BaseTooltip label="Esvaziar carrinho" v-if="shopCart.length">
+            <button class="btn" type="button" @click="emptyShopCart()" aria-label="Esvaziar carrinho"><v-icon name="bi-cart-x" scale="1.3" fill="#fff"  /></button>
+          </BaseTooltip>
+        
+          <BaseTooltip label="Fechar">
+          <button style="margin-left: auto" class="btn btn-close" @click="toggleSidebar(false)" aria-label="Fechar carrinho"><v-icon name="bi-arrow-right" /></button>
+          </BaseTooltip>
       </div>
     </header>
-    <div class="sidebar__content">
+    <div class="sidebar__content" :class="[{'is-checkout-page': !isSidebar}]">
       <table class="sidebar__table" v-if="shopCart.length">
-        <thead>
+        <thead v-if="!isSidebar">
           <tr>
             <th>
               &nbsp;
             </th>
-            <th>
+            <th class="text--left">
               Descrição
             </th>      
-            <th>
+            <th class="text--center">
               Qtd.
             </th>       
-            <th>
+            <th class="text--right">
               Preço
             </th>  
             <th>
@@ -33,61 +39,36 @@
             <td>
               <img :src="movie.image" :alt="movie.title" class="sidebar__image" width="36" height="54">
             </td>
-            <td>
+            <td class="text--left">
               {{ movie.title }}
             </td>
-            <td>
+            <td class="text--center">
               {{ movie.quantity }}
             </td>
-            <td>
+            <td class="text--right">
               {{ movie.price }}
             </td>
-            <td>
-              <button @click="removeMovieFromCart(movie)"> &times; </button>
+            <td class="text--right">
+              <BaseTooltip label="Remover">
+                <button class="btn" @click="removeMovieFromCart(movie)"> <v-icon name="md-clear-round" fill="#ff0000" /> </button>
+              </BaseTooltip>
             </td>
           </tr>
         </tbody>
-        <!-- <tfoot>
-          <tr>
-            <td colspan="2">Total</td>
-            <td colspan="3">{{ brCurrency(totalValue) }}</td>
-          </tr>
-          <tr>
-            <td colspan="5"><button button type="button">Finalizar</button></td>
-          </tr>          
-        </tfoot> -->
       </table>
-      <p v-else>Carrinho vazio!</p>
+      <div class="empty-cart" v-else>
+        <v-icon name="bi-cart-x" scale="5"></v-icon>
+        <p>Seu carrinho está vazio!</p>
+      </div>
     </div>
-      <!-- <ul>
-        <li v-for="(movie, index) in shopCart" :key="index">
-          <div class="sidebar__image-wrapper">
-            <img :src="movie.image" :alt="movie.title" class="sidebar__image">
-          </div>
-          <div class="sidebar__movie-info">
-            <p class="sidebar__movie-name">{{ movie.title }}</p>
-            <p class="sidebar__movie-quantity">{{ movie.quantity }}</p>
-            <p class="sidebar__movie-price">R${{movie.price}}</p>
-            <button @click="removeMovieFromCart(movie)">Del</button>
-          </div>
-        </li>
-      </ul> -->
-    </div>
+    
+    <slot name="content__footer">
+      <footer class="sidebar__footer">
+          <p class="sidebar__total">Total <span class="total">{{ brCurrency(totalValue) }}</span></p>
+          <button class="btn btn-secondary" @click="$router.push('/checkout')">Finalizar</button>
+      </footer>
+    </slot>    
 
-    <footer v-if="$slots.content__footer">
-      <slot name="content__footer"></slot>
-    </footer>
-
-    <footer class="sidebar__footer">
-        <p>Total <span class="total">{{ brCurrency(totalValue) }}</span></p>
-        <router-link to="/checkout" exact>
-          Finalizar
-        </router-link>
-    </footer>
-
-
-
-     
 
 </template>
 
@@ -98,10 +79,6 @@ export default {
 
   props: {
     isSidebar: {
-      type: Boolean,
-      default: false,
-    },
-    isCheckout: {
       type: Boolean,
       default: false,
     },
@@ -128,24 +105,83 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.is-sidebar {
-  .sidebar__table {
-    thead {
-      display: none;
+
+.sidebar__header {
+  background: #010E7E;
+  padding-block: 16px;
+  height: 60px;         
+}
+
+.sidebar__title {
+  color: #fff;
+  font-weight: 600;
+}
+
+.sidebar__header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-close {
+  float: right;
+  color: #fff;
+  border: solid 1px #fff;
+  border-radius: 4px;
+}
+
+.sidebar__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+
+.sidebar__table {
+  width: 100%;
+  border-spacing: 0;
+  thead {
+    th {
+      background: #010E7E;
+      color: #fff;
+      padding-block: 16px;
+      font-size: 16px;
+      padding-inline: 5px;
+      font-weight: 500;   
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding-block: 4px;
+        font-size: 14px;
+        padding-inline: 5px;
+      }
+    }
+
+    tr:not(:last-child) { 
+      border-bottom: solid 1px #cacaca;
+    }
+
+    tr:nth-child(even) {
+      background: #fff;
+    }    
+
+    tr:nth-child(odd) {
+      background: #deedee;
     }
   }
 }
 
-.is-checkout {
-  .sidebar__header {
-    display: none;
-  }
-  .sidebar__content {
-    padding: 0;
-  }
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  color: #010E7E;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
 }
 
-.sidebar__table {
-  width: 100%;
-}
 </style>
