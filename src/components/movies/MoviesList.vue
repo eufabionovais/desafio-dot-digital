@@ -14,7 +14,9 @@
       </div>
       <div class="movie-card__content">
         <h2 class="movie__title">{{ movie.title }}</h2>        
-        <div class="movie__genres" v-html='getGenreNames(movie.genre_ids)'></div>
+
+        <div v-if="movie.genre_ids.length" class="movie__genres" v-html='getGenreNames(movie.genre_ids)'></div>
+
         <div class="movie-card__price-and-action">
           <p class="movie__price">{{ brCurrency(movie.price) }}</p>
           <button class="btn btn-lg" @click="addToShopCart(movie)">Adicionar</button>

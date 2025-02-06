@@ -2,7 +2,7 @@
   <header>
     <div class="inner-content">
      <AppLogo />
-     <form @submit.prevent="searchForMovies" class="search-form">
+     <form @submit.prevent="searchForMovies" class="search-form" v-if="!isCheckoutPage">
       <div class="form-group-icon">
         <input type="text" v-model="searchString" placeholder="Qual filme deseja encontrar?">
         <button class="btn" type="submit" aria-label="Buscar filmes" :disabled="searchString.length < 3"><v-icon name="bi-search" scale="1.2" class="icon" /></button>
@@ -58,7 +58,15 @@ export default {
         return this.shopCart.reduce((acumulator, currentItem) => {
           return acumulator += currentItem.quantity;
         },0)
+      },
+
+
+
+      isCheckoutPage() {
+        return this.$route.name === 'checkout'; // Certifique-se de que o nome da rota de checkout seja esse
       }
+    
+
     }  
 }
 </script>

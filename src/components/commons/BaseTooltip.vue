@@ -30,10 +30,14 @@ export default {
       
       this.visible = true;
 
-      const button = event.target.getBoundingClientRect();
+      const button = event?.target?.getBoundingClientRect();
       const container = this.$refs.container.getBoundingClientRect();
-      const tooltip = this.$refs.tooltip.getBoundingClientRect();
+      const tooltip = this.$refs?.tooltip?.getBoundingClientRect();
       const margin = 8; 
+
+      if(!tooltip) {
+        return
+      }
 
     
       let left = button.left - container.left + button.width / 2;

@@ -8,8 +8,8 @@
             <button class="btn" type="button" @click="emptyShopCart()" aria-label="Esvaziar carrinho"><v-icon name="bi-cart-x" scale="1.3" fill="#fff"  /></button>
           </BaseTooltip>
         
-          <BaseTooltip label="Fechar">
-          <button style="margin-left: auto" class="btn btn-close" @click="toggleSidebar(false)" aria-label="Fechar carrinho"><v-icon name="bi-arrow-right" /></button>
+          <BaseTooltip label="Fechar" style="margin-left: auto">
+            <button  class="btn btn-close" @click="toggleSidebar(false)" aria-label="Fechar carrinho"><v-icon name="bi-arrow-right" /></button>
           </BaseTooltip>
       </div>
     </header>
@@ -89,9 +89,6 @@ export default {
 
   methods: {
     ...mapActions(['addMovieToCart', 'removeMovieFromCart', 'emptyShopCart', 'toggleSidebar']),
-    // brCurrency(value) {
-    //   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || '';
-    // }
   },
   computed: {
     ...mapState(['shopCart']),

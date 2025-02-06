@@ -9,8 +9,8 @@ import BaseModal from "./components/commons/BaseModal.vue"
 import BaseTooltip from "./components/commons/BaseTooltip.vue"
 import Loader from "./components/commons/Loader.vue"
 
-import { BiStarFill, BiCartCheckFill, BiHeartFill, BiSearch, MdClearRound, IoTrashBin, BiArrowRight, BiCartX, BiCart  } from "oh-vue-icons/icons";
-addIcons(BiStarFill, BiCartCheckFill, BiHeartFill, BiSearch, MdClearRound, IoTrashBin, BiArrowRight, BiCartX, BiCart  );
+import { BiStarFill, BiCartCheckFill, BiHeartFill, BiSearch, MdClearRound, IoTrashBin, BiArrowRight, BiCartX, BiCart, RiAlarmWarningLine   } from "oh-vue-icons/icons";
+addIcons(BiStarFill, BiCartCheckFill, BiHeartFill, BiSearch, MdClearRound, IoTrashBin, BiArrowRight, BiCartX, BiCart, RiAlarmWarningLine   );
 
 const app = createApp(App)
 

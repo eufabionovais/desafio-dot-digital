@@ -107,12 +107,16 @@ const store = createStore(
           `${moviesUrl}&page=${state.currentPage}`
         );
 
-        const data = await response.json();
 
+        if (!response.ok || response.status !== 200) {
+          throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+        }        
+
+        const data = await response.json();
         commit('SET_MOVIES', data); 
       } catch (error) {
-        console.error('Erro ao buscar filmes:', error);
-         commit('SET_ERROR', 'Erro ao carregar produtos.');
+         console.error('Erro ao buscar filmes:', error);
+         commit('SET_ERROR', 'Não foi possível carregar os filmes. Tente novamente mais tarde.');
       }
       finally {
         commit('SET_LOADING', false);
@@ -124,11 +128,20 @@ const store = createStore(
         const response = await fetch(
           genresUrl
         );
+
+        if (!response.ok || response.status !== 200) {
+          throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
         const data = await response.json();
-        commit('SET_GENRES', data.genres); // Atualiza a lista de gêneros
+        commit('SET_GENRES', data.genres); 
       } catch (error) {
         console.error('Erro ao buscar gêneros:', error);
+        commit('SET_GENRES', [])
       }
+      finally {
+        commit('SET_LOADING', false);
+      }      
     },
 
 
@@ -142,8 +155,8 @@ const store = createStore(
               }
           })
 
-          if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.statusText}`);
+          if (!response.ok || response.status !== 200) {
+             throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
           }
 
           const data = await response.json();
@@ -155,35 +168,30 @@ const store = createStore(
           state.totalResults = 0;
 
           commit('SET_MOVIES', data);
-
-
         } catch (error) {
-            console.log("Error", error)
+          console.error('Erro ao buscar filmes:', error);
+          commit('SET_ERROR', 'Erro ao buscar os filmes. Verifique sua conexão e tente novamente.');
         }
         finally {
-          console.log("Acabou")
           commit('SET_LOADING', false);
         }
     },
     
-    async addMovieToCart({commit, state}, movie) {
+    addMovieToCart({commit, state}, movie) {
       commit('ADD_MOVIE_TO_CART', movie)
     }, 
 
-    async removeMovieFromCart({commit, state}, movie) {
+    removeMovieFromCart({commit, state}, movie) {
       commit('REMOVE_MOVIE_FROM_CART', movie)
     },   
     
-    async emptyShopCart({commit}) {
+    emptyShopCart({commit}) {
       commit('EMPTY_SHOP_CART')
     },
     
     toggleSidebar({commit}, status) {
       commit('TOGGLE_SIDEBAR', status)
-    }
-
-
-  },
+    }  },
 
 
   getters: {

@@ -1,13 +1,16 @@
 <template>
+  
+  <div class="error-message" v-if="error">
+    <v-icon name="ri-alarm-warning-line" fill="#ff0000" scale="8" />
+    <p>{{ error }}</p>  
+  </div>
 
   <div class="movies-wrapper">
-
-    <MoviesList :movies="movies" />
-    
+    <MoviesList :movies="movies" />    
   </div>
+
   <Loader v-if="loading" />
 
-  <div v-if="error">{{ error }}</div>
 </template>
 
 
@@ -34,4 +37,17 @@ export default {
     gap: 24px;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
+
+  .error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    p {
+      max-width: 32ch;
+      text-align: center;
+    }
+
+  }
+
 </style>
