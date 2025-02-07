@@ -19,19 +19,16 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <style scoped lang="scss">
-.logo-desktop {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .logo-mobile {
+  .logo-desktop {
     display: none;
   }
-  .logo-desktop {
-    display: block;
+
+  @media (min-width: 768px) {
+    .logo-mobile {
+      display: none;
+    }
+    .logo-desktop {
+      display: block;
+    }
   }
-}
-
-
-
 </style>

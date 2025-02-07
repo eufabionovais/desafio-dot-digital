@@ -1,6 +1,4 @@
 <template>
-
-
     <header class="sidebar__header">
       <div class="sidebar__header-content">
         
@@ -74,10 +72,10 @@ export default {
 }
 </script>
 
-<style>
-.sidebar__table {
-  thead {
-    display: none;
-  }  
-}
+<style scoped lang="scss">
+  .sidebar__table {
+    thead {
+      display: none;
+    }  
+  }
 </style>

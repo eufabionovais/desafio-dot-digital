@@ -13,15 +13,12 @@
         </button>
       </div>
       <div class="movie-card__content">
-        <h2 class="movie__title">{{ movie.title }}</h2>        
-
+        <h2 class="movie__title">{{ movie.title }}</h2> 
         <div v-if="movie.genre_ids.length" class="movie__genres" v-html='getGenreNames(movie.genre_ids)'></div>
-
         <div class="movie-card__price-and-action">
           <p class="movie__price">{{ brCurrency(movie.price) }}</p>
           <button class="btn btn-lg" @click="addToShopCart(movie)">Adicionar</button>
         </div>
-        
       </div>
     </div>
 
@@ -31,16 +28,17 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import {formatDate} from "../../mixins/format-date.mixin"
 import { currencies } from "../../mixins/currency-mixin";
+
 export default {
   props: {
     movies: {
       required: true,
       type: Array
-    }
+    },
   },
+
+
   mixins: [formatDate, currencies],
-
-
     mounted() {
     this.fetchMovies(this.currentPage);
     window.addEventListener('scroll', this.handleScroll); 
@@ -53,7 +51,6 @@ export default {
   created() {
     this.$store.dispatch('fetchGenres');
   },  
-
 
   computed: {
     ...mapState(['genres', 'currentPage', 'totalPages', 'totalResults']),
@@ -80,16 +77,12 @@ export default {
       this.toggleMovieAsFavorite(movie);
     },
 
-
     handleScroll() {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
       if (scrollTop + clientHeight >= scrollHeight - 100 && !this.loading) {
         this.fetchMovies();
       }
     },
-
-
-
   }
 
 }

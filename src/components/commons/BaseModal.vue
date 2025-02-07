@@ -13,7 +13,6 @@
       </div>
 
       <footer class="modal-footer">
-        <!-- <button @click="handleCancel">{{ cancelText }}</button> -->
         <button @click="handleConfirm" class="btn btn-secondary">{{ confirmText }}</button>
       </footer>
     </div>
@@ -77,70 +76,54 @@ export default {
 </script>
 
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.modal-container {
-  background: white;
-  width: 400px;
-  padding: 20px;
-  border-radius: 8px;
-}
+  .modal-container {
+    background: white;
+    width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+  }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
-}
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
 
-.modal-header h2 {
-  margin: 0;
-  font-weight: 500;
-}
+  .modal-header h2 {
+    margin: 0;
+    font-weight: 500;
+  }
 
-.close-button {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
 
-.modal-body {
-  padding: 24px 0;
-}
+  .modal-body {
+    padding: 24px 0;
+  }
 
-.modal-footer {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #ddd;
-}
-
-/* .modal-footer button {
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.modal-footer button:first-child {
-  background: #ccc;
-}
-
-.modal-footer button:last-child {
-  background: #007bff;
-  color: white;
-} */
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+  }
 </style>

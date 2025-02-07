@@ -74,8 +74,7 @@ export default {
 
       isCheckoutPage() {
         return this.$route.name === 'checkout'; 
-      }   
-
+      }
     }  
 }
 </script>
@@ -110,7 +109,7 @@ header {
 }
 
 .shopping-cart-total {
-    background: red;
+    background: #ff0000;
     position: absolute;
     top: -8px;
     right: -12px;
@@ -133,7 +132,6 @@ header {
     fill: #aaa;
   }  
 }
-
 
 .form-group-icon {
   display: flex;

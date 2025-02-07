@@ -8,7 +8,6 @@
   </main>
 
   <aside class="sidebar" :class="{'opened': sidebarStatus}">
-
     
     <ShoppingCart :is-sidebar="true"  v-if="sidebarContent === 'shopping-cart'">
         <template #content__footer>

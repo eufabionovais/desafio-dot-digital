@@ -138,7 +138,6 @@ export default {
   font-size: 18px;
 }
 
-
 .sidebar__table {
   width: 100%;
   border-spacing: 0;

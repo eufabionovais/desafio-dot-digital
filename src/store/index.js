@@ -7,7 +7,6 @@ const moviesUrl = `${baseUrl}/movie/top_rated?language=pt-BR&api_key=${apiKey}`;
 const genresUrl = `${baseUrl}/genre/movie/list?language=pt-BR&api_key=${apiKey}`;
 const token = `eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YjBlMmM0MzQ0ODk5NTFlYjNhMTI3ODZhMjAyMThiOCIsIm5iZiI6MTY5ODEwNjkxMi42MDYwMDAyLCJzdWIiOiI2NTM3MGUyMDFmNzQ4YjAxM2ViNGRlNTciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.MponbgWZP9kc1xoVpC-h1vAxAVm6Kjlh2bvsrb5mC0c`; 
 
-// Cria o store
 const store = createStore(
   {
     plugins: [new VuexPersistence().plugin],
@@ -18,12 +17,12 @@ const store = createStore(
     currentPage: 1,
     totalPages: 1,
     totalResults: 0,
-    loading: false,
-    error: null,
     shopCart: [],
     favorites: [],
     sidebarStatus: false,
     sidebarContent: 'shopping-cart',
+    loading: false,
+    error: null,
   },
   mutations: {
     SET_MOVIES(state, payload) {
@@ -101,7 +100,6 @@ const store = createStore(
     },
     
     REMOVE_FAVORITE(state, movie) {
-        debugger
         state.favorites = state.favorites.filter((currentItem) => {
             return currentItem.id !== movie.id;
         })
@@ -148,7 +146,6 @@ const store = createStore(
           `${moviesUrl}&page=${state.currentPage}`
         );
 
-
         if (!response.ok || response.status !== 200) {
           throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
         }        
@@ -184,7 +181,6 @@ const store = createStore(
         commit('SET_LOADING', false);
       }      
     },
-
 
     async searchMovies({commit, state}, searchText){
         try {
