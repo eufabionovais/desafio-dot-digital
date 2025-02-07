@@ -107,13 +107,13 @@ export default {
 <style lang="scss">
 
 .sidebar__header {
-  background: #010E7E;
+  background: var(--primary);
   padding-block: 16px;
   height: 60px;         
 }
 
 .sidebar__title {
-  color: #fff;
+  color: var(--light);
   font-weight: 600;
 }
 
@@ -125,8 +125,8 @@ export default {
 
 .btn-close {
   float: right;
-  color: #fff;
-  border: solid 1px #fff;
+  color: var(--light);
+  border: solid 1px var(--light);
   border-radius: 4px;
 }
 
@@ -143,8 +143,8 @@ export default {
   border-spacing: 0;
   thead {
     th {
-      background: #010E7E;
-      color: #fff;
+      background: var(--primary);
+      color: var(--light);
       padding-block: 16px;
       font-size: 16px;
       padding-inline: 5px;
@@ -165,7 +165,7 @@ export default {
     }
 
     tr:nth-child(even) {
-      background: #fff;
+      background: var(--light);
     }    
 
     tr:nth-child(odd) {
@@ -177,7 +177,7 @@ export default {
 .empty-cart {
   display: flex;
   flex-direction: column;
-  color: #010E7E;
+  color: var(--primary);
   align-items: center;
   justify-content: center;
   margin-top: 30px;

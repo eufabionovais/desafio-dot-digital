@@ -91,7 +91,7 @@ export default {
 <style lang="scss" scoped>
 
   .movie-card {
-    background: #fff;    
+    background: var(--light);    
     padding: 4px;
     border-radius: 4px;
     box-shadow: 0 0 6px 6px rgba(0,0,0,0.05);
@@ -112,7 +112,7 @@ export default {
     background: rgba(0,0,0,0.7);
     padding: 8px 16px;
     text-align: center;
-    color: #ffbd25;
+    color: var(--highlight);
     font-weight: 600;
     font-size: 16px;    
     display: flex;
@@ -168,7 +168,7 @@ export default {
     gap: 32px;
     align-items: center;
     padding: 4px 8px;
-    background: #f1f1f1;
+    background: var(--neutral-light);
     border-radius: 8px;
     margin-top: auto;
   }
@@ -176,8 +176,8 @@ export default {
 
   .movie-card__price-and-action .btn {
     flex: 1;
-    background: #010E7E;
-    color: #fff;
+    background: var(--primary);
+    color: var(--light);
     padding: 12px 16px;
     border: none;
     border-radius: 8px;
@@ -193,7 +193,7 @@ export default {
     &:enabled {
       cursor: pointer;
       &:hover {
-        outline: solid 0 #26AEFF;
+        outline: solid 0 var(--primary);
          outline-offset: 0;  
       }
     }
@@ -205,8 +205,8 @@ export default {
   }
 
   .movie__genre {
-    background: #ffbd25;
-    color: #000;
+    background: var(--highlight);
+    color: var(--dark);
     display: inline-flex;
     align-items: center;
     justify-content: center;

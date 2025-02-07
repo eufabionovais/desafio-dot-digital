@@ -34,7 +34,7 @@
     border-radius: 50%;
     transform: scale(1);
     animation: carregando 0.5s linear infinite alternate-reverse;
-    background-color: #010E7E;
+    background-color: var(--primary);
   }
 
   .loader .dot:nth-child(1) {

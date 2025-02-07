@@ -183,6 +183,7 @@ const store = createStore(
     },
 
     async searchMovies({commit, state}, searchText){
+      commit('SET_LOADING', true);
         try {
 
           const response = await fetch(`${baseUrl}/search/movie?query=${searchText}&include_adult=false&language=pt-BR&page=1`, {

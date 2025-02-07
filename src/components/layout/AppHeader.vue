@@ -82,7 +82,7 @@ export default {
 <style scoped lang="scss">
 header {
   height: 80px;
-  background: #fff;
+  background: var(--light);
   box-shadow: 0 5px 5px rgba(0,0,0,0.05);
   position: fixed;
   left: 0;
@@ -122,7 +122,7 @@ header {
     min-width: 22px;
     aspect-ratio: 1;
     font-weight: 500;
-    color: #fff;
+    color: var(--light);
 }
 
 .search-form {

@@ -93,7 +93,7 @@ export default {
       height: 0;
       border-style: solid;
       border-width: 5px;
-      border-color: transparent transparent #000 transparent;
+      border-color: transparent transparent var(--dark) transparent;
       position: absolute;
       top: -9px;
       left: 50%;
