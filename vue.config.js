@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/desafio-dot-digital/" : "/",
+  publicPath: process.env.VUE_APP_PUBLIC_PATH || "/",
 };

@@ -112,7 +112,7 @@ export default {
     background: rgba(0,0,0,0.7);
     padding: 8px 16px;
     text-align: center;
-    color: var(--highlight);
+    color: var(--highlight-color);
     font-weight: 600;
     font-size: 16px;    
     display: flex;
@@ -205,7 +205,7 @@ export default {
   }
 
   .movie__genre {
-    background: var(--highlight);
+    background: var(--highlight-color);
     color: var(--dark);
     display: inline-flex;
     align-items: center;
