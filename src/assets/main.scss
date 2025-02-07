@@ -1,4 +1,4 @@
-@import "animations.scss";
+@import url("animations.scss");
 
 *, *:before, *:after {
   margin: 0;
@@ -24,12 +24,12 @@ img {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #ffbd25;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #f1c255;
 }
 
 
