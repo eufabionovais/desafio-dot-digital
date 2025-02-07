@@ -25,7 +25,7 @@
             <th class="text--right">&nbsp;</th>
           </tr>
         </thead>
-        <tbody>
+        <transition-group name="fade" tag="tbody">
           <tr v-for="movie in favorites" :key="movie.id">
             <td>
               <img :src="movie.image" :alt="movie.title" class="sidebar__image" width="36" height="54">
@@ -49,7 +49,7 @@
               </BaseTooltip>
             </td>
           </tr>
-        </tbody>
+        </transition-group>
       </table>
       <div class="empty-cart" v-else>
         <v-icon name="io-heart-dislike-outline" scale="5"></v-icon>

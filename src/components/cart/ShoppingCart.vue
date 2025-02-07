@@ -34,27 +34,27 @@
             </th>  
           </tr>                                     
         </thead>
-        <tbody>
-          <tr v-for="(movie, index) in shopCart" :key="index">
-            <td>
-              <img :src="movie.image" :alt="movie.title" class="sidebar__image" width="36" height="54">
-            </td>
-            <td class="text--left">
-              {{ movie.title }}
-            </td>
-            <td class="text--center">
-              {{ movie.quantity }}
-            </td>
-            <td class="text--right">
-              {{ movie.price }}
-            </td>
-            <td class="text--right">
-              <BaseTooltip label="Remover">
-                <button class="btn" @click="removeMovieFromCart(movie)"> <v-icon name="md-clear-round" fill="#ff0000" /> </button>
-              </BaseTooltip>
-            </td>
-          </tr>
-        </tbody>
+          <transition-group name="fade" tag="tbody">
+            <tr v-for="(movie, index) in shopCart" :key="index">
+              <td>
+                <img :src="movie.image" :alt="movie.title" class="sidebar__image" width="36" height="54">
+              </td>
+              <td class="text--left">
+                {{ movie.title }}
+              </td>
+              <td class="text--center">
+                {{ movie.quantity }}
+              </td>
+              <td class="text--right">
+                {{ movie.price }}
+              </td>
+              <td class="text--right">
+                <BaseTooltip label="Remover">
+                  <button class="btn" @click="removeMovieFromCart(movie)"> <v-icon name="md-clear-round" fill="#ff0000" /> </button>
+                </BaseTooltip>
+              </td>
+            </tr>
+          </transition-group>
       </table>
       <div class="empty-cart" v-else>
         <v-icon name="bi-cart-x" scale="5"></v-icon>
