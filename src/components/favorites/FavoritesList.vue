@@ -38,9 +38,9 @@
             </td>
             <td>
               <BaseTooltip label="Adicionar ao carrinho">
-              <button class="btn">
-                <v-icon name="bi-cart-plus"  />
-              </button>
+                <button class="btn" @click="addMovieToCart(movie)">
+                  <v-icon name="bi-cart-plus"  />
+                </button>
               </BaseTooltip>
             </td>
             <td class="text--right">
@@ -64,7 +64,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
     methods: {
-    ...mapActions(['toggleSidebar', 'removeFavorite', 'emptyFavorites']),
+    ...mapActions(['toggleSidebar', 'removeFavorite', 'emptyFavorites', 'addMovieToCart']),
   },
   computed: {
     ...mapState(['shopCart']),

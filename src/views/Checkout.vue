@@ -62,7 +62,6 @@
           
           <div class="form-group">
             <label for="estado">Estado <i class="mandatory">*</i></label>
-
             <select name="estado" id="estado" v-model="estado">
               <option value="" selected disabled>Selecione o Estado</option>
               <option v-for="(valor, chave) in estadosBrasileiros" :key="chave" :value="chave" :selected="valor === estado">
@@ -107,13 +106,13 @@ import { cartTotal } from "@/mixins/cart-total-mixin";
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength, helpers } from '@vuelidate/validators'
 import { isValidCPF } from "../validators/custom-validators"; 
-import {mask} from 'vue-the-mask';
+import { mask } from 'vue-the-mask';
 import { estadosBrasileiros } from "../utils/estados-brasileiros";
 import ShoppingCart from '@/components/cart/ShoppingCart.vue';
 
 
 export default {
-  directives: {mask},
+  directives: { mask },
   mixins: [currencies, cartTotal],
   components: {
     ShoppingCart
@@ -123,6 +122,7 @@ export default {
   },
   data() {
     return {
+      
       estadosBrasileiros: estadosBrasileiros,
       nome: '',
       cpf: '',
@@ -132,6 +132,7 @@ export default {
       endereco: '',
       cidade: '',
       estado: '',
+
       isModalVisible: false
     }
   },
@@ -200,10 +201,6 @@ export default {
       
     },
 
-    // handleCancel() {
-    //   alert("CAncelar")
-    // },
-
     handleConfirm() {
       this.$router.push("/")
       this.$store.commit("EMPTY_SHOP_CART")
@@ -215,54 +212,53 @@ export default {
 
 <style scoped lang="scss">
 
-.checkout__shopping-cart {
-  margin-top: 24px;
-}
-
-@media (min-width: 768px) {
-  
-  .checkout-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    margin-top: 32px;
-  }
-}
-
-form {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  width: 100%;
-  
-  .form-group {
-    flex: 1;
-    &.w-full {
-      flex-basis: 100%;
-      flex-grow: 0;
-    }
-
-  }
-  button {
+  .checkout__shopping-cart {
     margin-top: 24px;
   }
-}
 
-.sidebar__footer {
-  padding-bottom: 20px;
-}
+  @media (min-width: 768px) {
+    .checkout-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      margin-top: 32px;
+    }
+  }
 
-.sidebar__total {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 600;
-  font-size: 18px;
-}
+  form {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    width: 100%;
+    
+    .form-group {
+      flex: 1;
+      &.w-full {
+        flex-basis: 100%;
+        flex-grow: 0;
+      }
 
-.mandatory {
-  color: red;
-}
+    }
+    button {
+      margin-top: 24px;
+    }
+  }
+
+  .sidebar__footer {
+    padding-bottom: 20px;
+  }
+
+  .sidebar__total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .mandatory {
+    color: red;
+  }
 
 </style>
 

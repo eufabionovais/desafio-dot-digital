@@ -10,8 +10,6 @@
 
 </template>
 
-
-
 <script>
 import { mapState, mapGetters } from 'vuex';
 import MoviesList from '@/components/movies/MoviesList.vue';

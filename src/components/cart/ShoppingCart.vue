@@ -65,7 +65,7 @@
     <slot name="content__footer">
       <footer class="sidebar__footer">
           <p class="sidebar__total">Total <span class="total">{{ brCurrency(totalValue) }}</span></p>
-          <button class="btn btn-secondary" @click="$router.push('/checkout')">Finalizar</button>
+          <button class="btn btn-secondary" :disabled="!shopCart.length" @click="$router.push('/checkout')">Finalizar</button>
       </footer>
     </slot>    
 
